@@ -1,35 +1,29 @@
 import { useState } from 'react';
 import React from 'react'
-import { Button, Alert, Offcanvas, ListGroup } from 'react-bootstrap';
-
+import { Container, Row, Col, Nav } from 'react-bootstrap';
+import './index.css'
 export const SidePanelNav = () => {
-    const [show, setShow] = useState(false); // Set the initial state to true for a static Offcanvas
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
+   
     return (
         <>
-            <Button variant="primary" onClick={handleShow} className="me-2">
-                --MENU--
-            </Button>
+            <div className="App">
+               
+                <Container fluid>
+                    <Row>
+                        <Col md={1}className="sidebar">
+                            <Nav className="flex-column">
+                                <Nav.Link href="Dashboard">INICIO</Nav.Link>
+                                <Nav.Link href="Perfil">PERFIL</Nav.Link>
+                                <Nav.Link href="Licitaciones-Actuales">LICITACIONES ACTUALES</Nav.Link>
+                                <Nav.Link href="Nueva-Licitacion">CREAR NUEVA LICITACION</Nav.Link>
+                                <Nav.Link href="Clientes">CARTELERA DE CLIENTES</Nav.Link>
+                                <Nav.Link href="Usuarios">CONTROL DE USUARIOS</Nav.Link>
+                            </Nav>
+                        </Col>
 
-            <Offcanvas show={show} onHide={handleClose} scroll={true}>
-                {/* scroll prop is set to true to enable body scrolling */}
-                <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>APP LICITACIONES BETA</Offcanvas.Title>
-
-                </Offcanvas.Header>
-                <hr />
-                <Offcanvas.Body>
-                    <ListGroup>
-                        <ListGroup.Item action href="Perfil">PERFIL</ListGroup.Item>
-                        <ListGroup.Item action href="Licitaciones-Actuales">LICITACIONES ACTUALES</ListGroup.Item>
-                        <ListGroup.Item action href="Nueva-Licitacion">CREAR NUEVA LICITACION</ListGroup.Item>
-                        <ListGroup.Item action href="Clientes">CARTELERA DE CLIENTES</ListGroup.Item>
-                        <ListGroup.Item action href="Usuarios">CONTROL DE USUARIOS</ListGroup.Item>
-                    </ListGroup>
-                </Offcanvas.Body>
-            </Offcanvas>
+                    </Row>
+                </Container>
+            </div>
         </>
     );
 }

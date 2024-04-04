@@ -6,8 +6,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { RouterConfig } from './Routes/RouterConfig.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterConfig/>
-    <App />
-  </React.StrictMode>,
+  <RouterConfig>
+    <React.StrictMode>
+
+      <App />
+    </React.StrictMode>
+  </RouterConfig>
+  ,
 )
