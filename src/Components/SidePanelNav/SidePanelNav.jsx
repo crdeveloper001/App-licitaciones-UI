@@ -18,6 +18,8 @@ export const SidePanelNav = () => {
                                 <Nav.Link href="Nueva-Licitacion">CREAR NUEVA LICITACION</Nav.Link>
                                 <Nav.Link href="Clientes">CARTELERA DE CLIENTES</Nav.Link>
                                 <Nav.Link href="Usuarios">CONTROL DE USUARIOS</Nav.Link>
+                                <hr />
+                                <Nav.Link href="/">LOG OUT</Nav.Link>
                             </Nav>
                         </Col>
 
