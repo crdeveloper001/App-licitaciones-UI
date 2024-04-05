@@ -1,19 +1,19 @@
 import { useState } from "react"
-const useLogin = (initialState = {"user_email":"","user_pass":""}) => {
+const useLogin = () => {
 
-    const  [user, setUser] = useState(initialState);
-
-    const makeLogin = () =>{
-        if (initialState.user_email === user.user_email && initialState.user_pass === user.user_pass) {
-            alert("LOGIN SUCCESS");
-            
-        }else{
-            alert("BAD CREDENTIALS")
+    const  [user, setUser] = useState(null);
+    const saveCredentials = (userdata) =>{
+        setUser(userdata)
+    }
+    const authorizationLogin=(credentials) =>{
+        if (credentials.email === user.user_email && credentials.pass == user.user_pass) {
+            alert("login in")
         }
     }
     return {
         user,
-        makeLogin
+        saveCredentials,
+        authorizationLogin
     }
 
 }
