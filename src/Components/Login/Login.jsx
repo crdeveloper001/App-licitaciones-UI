@@ -3,8 +3,7 @@ import { Container, Card, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import useLogin from "../../hooks/useLogin";
 export const Login = () => {
-
-  const {user,saveCredentials} = useLogin()
+  const { user, saveCredentials } = useLogin();
 
   const app_nav = useNavigate();
 
@@ -15,8 +14,6 @@ export const Login = () => {
     };
     saveCredentials(data);
     
-    console.log("from hook",user);
-    //console.log(data);
   };
 
   return (
@@ -26,7 +23,7 @@ export const Login = () => {
       <Card>
         <Card.Body>
           <Form onSubmit={handleLogin}>
-            <Form.Group >
+            <Form.Group>
               <Form.Label>CORREO ELECTRONICO</Form.Label>
               <Form.Control
                 required
@@ -37,12 +34,21 @@ export const Login = () => {
               />
               <br />
               <Form.Label>CONTRASEÑA</Form.Label>
-              <Form.Control required id="passInput" type="password" autoComplete="on" />
+              <Form.Control
+                required
+                id="passInput"
+                type="password"
+                autoComplete="on"
+              />
 
               <hr />
-              <Button variant="primary" type="submit">
+              <Button variant="primary" type="button" onClick={() =>{
+                handleLogin()
+              }}>
                 INICIAR SESION
               </Button>
+
+              <label htmlFor="">from state = {user.username}</label>
             </Form.Group>
           </Form>
         </Card.Body>
