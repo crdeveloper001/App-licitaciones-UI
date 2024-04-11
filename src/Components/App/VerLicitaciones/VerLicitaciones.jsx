@@ -1,51 +1,32 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SidePanelNav } from '../../SidePanelNav/SidePanelNav'
-import { Button, Container, Table } from 'react-bootstrap'
-import { VerDetalles } from './VerDetalles/VerDetalles';
+import { Button, Container, Table, Modal, Card, Row, Col } from 'react-bootstrap'
+import useTenders from '../../../hooks/useTenders';
 
 export const VerLicitaciones = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [selectedTender, setSelectedTender] = useState(null);
+  const { tenderList, tender, getAllTenders, saveTenderState } = useTenders();
+  const [showModalInfo, setShowModalInfo] = useState(false);
 
-  // Datos de muestra
-  const mockTenders = [
-    {
-      _id: '1',
-      tender_name: 'Tender 1',
-      tender_description: 'Descripción del Tender 1',
-      tender_client: 'Cliente 1',
-      tender_client_email: 'cliente1@example.com',
-      tender_begin: new Date('2024-04-01'),
-      tender_end: new Date('2024-04-30'),
-      tender_budget: 10000,
-      tender_state: true
-    },
-    {
-      _id: '2',
-      tender_name: 'Tender 2',
-      tender_description: 'Descripción del Tender 2',
-      tender_client: 'Cliente 2',
-      tender_client_email: 'cliente2@example.com',
-      tender_begin: new Date('2024-05-01'),
-      tender_end: new Date('2024-05-31'),
-      tender_budget: 15000,
-      tender_state: false
-    }
-  ];
-  const handleShowModal = (tender) => {
-    setSelectedTender(tender);
-    setShowModal(true);
-  };
+  const refreshInfo = () =>{
+    getAllTenders()
+  }
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+  useEffect(() => {
+    getAllTenders()
+    console.log("from hook:", tenderList);
+
+  }, [])
 
   return (
 
     <div>
       <SidePanelNav />
       <Container>
+        <Button variant="success" className='mt-3 mb-2' onClick={refreshInfo}>
+          Actualizar Informacion
+        </Button>
+        <hr />
+        <b className='mb-2'>TOTAL DE REGISTROS: {tenderList.length}</b>
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -58,7 +39,7 @@ export const VerLicitaciones = () => {
             </tr>
           </thead>
           <tbody>
-            {mockTenders.map(tender => (
+            {tenderList.map(tender => (
               <tr key={tender._id}>
                 <td>{tender._id}</td>
                 <td>{tender.tender_name}</td>
@@ -66,15 +47,92 @@ export const VerLicitaciones = () => {
                 <td>{new Date(tender.tender_end).toLocaleDateString()}</td>
                 <td>{tender.tender_state ? 'Activo' : 'Inactivo'}</td>
                 <td>
-                  <Button variant="info" onClick={() => handleShowModal(tender)}>
+                  <Button variant="info" onClick={() => {
+                    setShowModalInfo(true)
+                    saveTenderState(tender);
+                    console.log(showModalInfo);
+                  }}>
                     Ver Detalles
                   </Button>
+
                 </td>
+
               </tr>
+
             ))}
+
           </tbody>
         </Table>
-        {/* <VerDetalles show={showModal} tender={selectedTender} handleClose={handleCloseModal} /> */}
+        {showModalInfo ? <Modal show={showModalInfo} onHide={() => { setShowModalInfo(false) }}>
+          <Modal.Header closeButton>
+            <Modal.Title>Detalles del Contrato</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Card>
+
+              <Card.Body>
+                <Row>
+                  <Col>
+                    <h6><b>Nombre</b></h6>
+                    <p>{tender.tender_name}</p>
+                  </Col>
+
+                  <Col>
+                    <h6><b>Descripcion de Contrato</b></h6>
+                    <p>{tender.tender_description}</p>
+                  </Col>
+                </Row>
+                <hr />
+                <Row>
+                  <Col>
+                    <h6><b>Cliente Actual</b></h6>
+                    <p>{tender.tender_client}</p>
+                  </Col>
+                  <Col>
+                    <h6><b>Correo del Cliente</b></h6>
+                    <p>{tender.tender_client_email}</p>
+                  </Col>
+
+                </Row>
+                <hr />
+                <Row>
+                  <Col>
+                    <h6><b>Fecha de Inicio</b></h6>
+                    <p>{new Date(tender.tender_begin).toLocaleDateString()}</p>
+                  </Col>
+                  <Col>
+                    <h6><b>Fecha de Cierre</b></h6>
+                    <p>{new Date(tender.tender_end).toLocaleDateString()}</p>
+                  </Col>
+
+                </Row>
+                <hr />
+                <Row>
+                  <Col>
+                    <h6><b>Presupuesto</b></h6>
+                    <p>${tender.tender_budget}</p>
+                  </Col>
+                  <Col>
+                    <h6><b>Estado Actual Del Contrato</b></h6>
+                    <p>{tender.tender_state ? 'Activo' : 'Inactivo'}</p>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          </Modal.Body>
+          <Modal.Footer>
+
+            <Button variant="success" onClick={() => {
+
+              setShowModalInfo(false)
+
+            }}>
+              Cerrar reporte
+            </Button>
+
+          </Modal.Footer>
+        </Modal> : ""}
+        {/* <VerDetalles showWindow={showModalInfo} tender={tender} /> */}
       </Container>
     </div>
 

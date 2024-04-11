@@ -2,19 +2,25 @@ import React from "react";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import useLogin from "../../hooks/useLogin";
-export const Login = () => {
-  const { user, saveCredentials } = useLogin();
+import { AuthCredentials } from "../../Services/AuthorizationService";
 
+
+export const Login = () => {
+  const { user,payload, saveCredentials,sendAuthorization } = useLogin();
   const app_nav = useNavigate();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const data = {
-      email: document.getElementById("emailInput")?.value,
-      password: document.getElementById("passInput")?.value,
+        email: document.getElementById("emailInput")?.value,
+        pass: document.getElementById("passInput")?.value,
     };
-    saveCredentials(data);
-    
-  };
+    const payload = await saveCredentials(data);
+    // Use payload if needed
+    console.log("Payload from handleLogin:");
+    // Continue with the rest of your logic
+    app_nav("/Dashboard")
+};
+
 
   return (
     <Container>
@@ -47,8 +53,12 @@ export const Login = () => {
               }}>
                 INICIAR SESION
               </Button>
+              <Button variant="primary" onClick={() =>{
+                alert(JSON.stringify(payload))
+              }}>
+                Primary
+              </Button>
 
-              <label htmlFor="">from state = {user.username}</label>
             </Form.Group>
           </Form>
         </Card.Body>

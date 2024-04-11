@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
 import { SidePanelNav } from '../../SidePanelNav/SidePanelNav'
 import { Container, Form, Card, Button, Row, Col, FormLabel } from 'react-bootstrap'
-
+import useLogin from '../../../hooks/useLogin'
 export const Perfil = () => {
 
+  const {payload}  = useLogin();
+
+
+  const getPayload = () =>{
+    alert(JSON.stringify(payload))
+  }
 
   return (
 
@@ -11,7 +17,9 @@ export const Perfil = () => {
       <SidePanelNav/>
       <Container>
       <Card>
-        <Card.Header>MI PERFIL</Card.Header>
+        <Card.Header onClick={() =>{
+          getPayload()
+        }}>MI PERFIL</Card.Header>
         <Card.Body>
         <Button variant='warning'>
             EDITAR DATOS
