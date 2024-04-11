@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SidePanelNav } from '../../SidePanelNav/SidePanelNav'
-import { Container, Card, Button, Form, FormLabel, Row, Col } from 'react-bootstrap'
+import { Container, Card, Button, Form, FormLabel, Row, Col,Alert } from 'react-bootstrap'
 import useTender from "../../../hooks/useTenders";
 import './index.css'
 import useClients from '../../../hooks/useClients'
@@ -8,6 +8,10 @@ export const NuevaLicitacion = () => {
 
   const { clientsList, client, getAllClients } = useClients();
   const { tender, createTender, saveTenderState } = useTender();
+  const [confirmationCreated, setConfirmationCreated] = useState(false);
+  const [confirmationError, setConfirmationError] = useState(false);
+
+
 
   useEffect(() => {
     getAllClients();
@@ -27,9 +31,27 @@ export const NuevaLicitacion = () => {
       tender_budget: document.getElementById("InputBudget")?.value,
       tender_state: document.getElementById("InputCurrentState")?.value
     }
-    
+
     //await saveTenderState(formData);
-    await createTender(formData)
+    const response = await createTender(formData)
+
+    switch (response) {
+      case "TENDER CREATED":
+        setConfirmationCreated(true)
+        setTimeout(() =>{
+          setConfirmationCreated(false)
+        },5000)
+        break;
+      case "ERROR ON CREATED TENDER":
+        setConfirmationError(true);
+        break;
+
+      default:
+        setConfirmationCreated(false)
+    }
+
+
+    console.log(response);
 
   }
 
@@ -101,6 +123,10 @@ export const NuevaLicitacion = () => {
                   }}>
                     CREAR NUEVA LICITACION
                   </Button>
+
+                 {confirmationCreated ? <Alert variant="success" className='mt-3'>
+                    LICITACION REGISTRADA
+                  </Alert> :""}
                 </Col>
               </Row>
             </Form>

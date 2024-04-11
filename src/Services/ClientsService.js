@@ -36,6 +36,7 @@ export const PostClient = (information) => {
 }
 
 export const PutClient = (information) =>{
+
     const apiRequest = axios({
         url: API_BASE + endpointsBase.Clients.Update,
         method: 'PUT',
@@ -43,7 +44,7 @@ export const PutClient = (information) =>{
             'Content-Type': 'application/json'
         },
         data: {
-            get_id: "",
+            _id: information._id,
             client_name: information.client_name,
             client_email: information.client_email,
             client_phone: information.client_phone,
@@ -51,6 +52,8 @@ export const PutClient = (information) =>{
             client_state: information.client_state
         }
     })
+
+    return apiRequest;
 }
 
 export const DeleteClient = (id) => {

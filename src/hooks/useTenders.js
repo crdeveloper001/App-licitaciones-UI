@@ -25,7 +25,7 @@ const useTenders = () => {
         try {
             
             const request = await PostLicitacion(infoTender);
-            console.log(request);
+            
             return request.data;
 
         } catch (error) {
@@ -36,7 +36,7 @@ const useTenders = () => {
         try {
             const request = await GetAllLicitaciones();
             setTenderList(request.data)
-            console.log(request.data);
+            
             return tenderList
 
         } catch (error) {
@@ -46,7 +46,7 @@ const useTenders = () => {
     const updateTender = async () => {
         try {
             const request = await PutLicitacion(tender);
-            console.log(request.data);
+            
             return request.data;
         } catch (error) {
             throw error
@@ -56,7 +56,7 @@ const useTenders = () => {
     const deleteTender = async (id) => {
         try {
             const request = await DeleteLicitacion(id);
-            console.log(request.data);
+            
             return request.data;
         } catch (error) {
             throw error

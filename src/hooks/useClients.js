@@ -4,12 +4,12 @@ import { PostClient,DeleteClient,GetClients,PutClient } from "../Services/Client
 const useClients = () => {
     //make post and put
     const [client, setClient] = useState({
-        get_id: "",
+        _id: "",
         client_name: "",
         client_email: "",
         client_phone: "",
         client_website: "",
-        client_state: true
+        client_state: ""
     });
     //get list of clients only
     const [clientsList, setClientList] = useState([]);
@@ -18,10 +18,10 @@ const useClients = () => {
         setClient(infoClient);
     }
 
-    const createClient = async () => {
+    const createClient = async (infoCliente) => {
         try {
-            const request = await PostClient(client);
-            console.log(request);
+            const request = await PostClient(infoCliente);
+            
             return request.data;
 
         } catch (error) {
@@ -33,17 +33,19 @@ const useClients = () => {
 
             const request = await GetClients();
             setClientList(request.data)
-            console.log(request.data);
+            
             return clientsList
 
         } catch (error) {
             throw error
         }
     }
-    const updateClient = async () => {
+    const updateClient = async (infoClient) => {
+        
+
         try {
-            const request = await PutClient(client);
-            console.log(request.data);
+            const request = await PutClient(infoClient);
+            
             return request.data;
         } catch (error) {
             throw error
@@ -51,9 +53,10 @@ const useClients = () => {
     }
 
     const deleteClient = async (id) => {
+        
         try {
             const request = await DeleteClient(id);
-            console.log(request.data);
+          
             return request.data;
         } catch (error) {
             throw error
