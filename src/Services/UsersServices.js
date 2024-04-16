@@ -31,7 +31,7 @@ export const PostUser = (information) => {
                 user_name: information.user_name,
                 user_lastname: information.user_lastname,
                 user_email: information.user_email,
-                user_department: informationuser_department,
+                user_department: information.user_department,
                 user_manager: information.user_manager,
                 user_account: information.user_account,
                 user_password: information.user_password

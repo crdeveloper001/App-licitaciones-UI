@@ -36,7 +36,6 @@ const useTenders = () => {
         try {
             const request = await GetAllLicitaciones();
             setTenderList(request.data)
-            
             return tenderList
 
         } catch (error) {

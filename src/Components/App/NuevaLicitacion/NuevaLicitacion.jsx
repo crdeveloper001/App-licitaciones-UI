@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { SidePanelNav } from '../../SidePanelNav/SidePanelNav'
-import { Container, Card, Button, Form, FormLabel, Row, Col,Alert } from 'react-bootstrap'
+import { Container, Card, Button, Form, FormLabel, Row, Col, Alert } from 'react-bootstrap'
 import useTender from "../../../hooks/useTenders";
 import './index.css'
 import useClients from '../../../hooks/useClients'
@@ -38,9 +38,9 @@ export const NuevaLicitacion = () => {
     switch (response) {
       case "TENDER CREATED":
         setConfirmationCreated(true)
-        setTimeout(() =>{
+        setTimeout(() => {
           setConfirmationCreated(false)
-        },5000)
+        }, 5000)
         break;
       case "ERROR ON CREATED TENDER":
         setConfirmationError(true);
@@ -118,19 +118,17 @@ export const NuevaLicitacion = () => {
 
                     </Form.Select>
                   </Form.Group>
-                  <Button variant='primary' className='button-save' type='button' onClick={() => {
-                    handleSubmit()
-                  }}>
+                  <Button variant='primary' className='button-save' type='submit'>
                     CREAR NUEVA LICITACION
                   </Button>
 
-                 {confirmationCreated ? <Alert variant="success" className='mt-3'>
-                    LICITACION REGISTRADA
-                  </Alert> :""}
+
                 </Col>
               </Row>
             </Form>
-
+            {confirmationCreated ? <Alert variant="success" className='mt-3'>
+              LICITACION REGISTRADA
+            </Alert> : ""}
 
           </Card.Body>
         </Card>

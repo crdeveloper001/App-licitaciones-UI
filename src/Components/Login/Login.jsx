@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import useLogin from "../../hooks/useLogin";
 import { AuthCredentials } from "../../Services/AuthorizationService";
 
-
 export const Login = () => {
   const { user,payload, saveCredentials,sendAuthorization } = useLogin();
   const app_nav = useNavigate();
@@ -21,11 +20,9 @@ export const Login = () => {
     app_nav("/Dashboard")
 };
 
-
   return (
     <Container>
       <h2 className="mb-4">APP LICITACIONES DEQUISA</h2>
-
       <Card>
         <Card.Body>
           <Form onSubmit={handleLogin}>
