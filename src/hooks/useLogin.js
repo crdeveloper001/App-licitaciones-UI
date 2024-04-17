@@ -6,14 +6,39 @@ const useLogin = () => {
         email: "",
         pass: ""
     });
+    const [authorizeConfirmation, setAuthorizateConfirmation] = useState("")
     const [payload, setPayload] = useState({});
 
-    const sendAuthorization = async () => {
+    const sendAuthorization = async (data) => {
         try {
-            const payloadResponse = await AuthCredentials(user);
-            setPayload(payloadResponse.data);
-          
-            return payloadResponse.data;
+            const payloadResponse = await AuthCredentials(data);
+            if (payloadResponse.data !== null) {
+                await setPayload(payloadResponse.data);
+                console.log("response from authorization", payload);
+                
+                switch (payload.auth_Key) {
+                    case "ADMIN_USER":
+                        await setAuthorizateConfirmation("AUTHORIZED");
+                        await localStorage.setItem("sessionPayload", JSON.stringify(payload.payload));
+                        await localStorage.setItem("IsCurrentSession", authorizeConfirmation);
+                        break;
+
+                    default:
+                        console.error("ERROR ON THE REQUEST");
+                        
+                        break;
+                }
+            } else {
+                switch (payload.auth_Key) {
+                    case "UNAUTHORIZED":
+                        localStorage.removeItem("sessionPayload");
+                        localStorage.setItem("IsCurrentSession", false);
+                        alert("bad")
+                        break;
+                }
+            }
+
+
         } catch (error) {
             console.log(error);
             return null;
@@ -22,12 +47,11 @@ const useLogin = () => {
 
     const saveCredentials = async (userdata) => {
         setUser(userdata);
-        
-       
     };
 
     return {
         user,
+        authorizeConfirmation,
         payload,
         saveCredentials,
         sendAuthorization
